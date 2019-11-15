@@ -204,7 +204,7 @@ class _SecondState extends State<SecondPage> {
                             'Height',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,),
                           ),
-                          Text((post['height'] * 0.1).toString() + 'ft  =  ' + (post['height'] * 3.281).toString() + 'm'),
+                          Text(double.parse((post['height'] * 0.1).toStringAsFixed(2)).toString() + 'ft  =  ' + double.parse((post['height'] * 3.281).toStringAsFixed(2)).toString() + 'm'),
                           // Text('type ' + post['types'][0]['type']['name'].toString()),
                           // Image.network(post['sprites']['front_default'])
                         ],
