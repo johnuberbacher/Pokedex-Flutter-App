@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MyApp());
 
@@ -49,6 +49,34 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.red,
+              ),
+            ),
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text('Pokemon List'),
         actions: <Widget>[
@@ -78,11 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: ListView.builder(
                   itemCount: data == null ? 0 : data.length,
-                  itemBuilder: (BuildContext context, i) {
+                  itemBuilder: (BuildContext context, int i) {
+                    int pokeId = i + 1;
                     return ListTile(
-                      leading: CircleAvatar(
+                    leading: CircleAvatar(
                         backgroundColor: Colors.black12,
-                        backgroundImage: AssetImage('assets/sprites/$i.png'), // no matter how big it is, it won't overflow
+                        backgroundImage: AssetImage('assets/sprites/$pokeId.png'), // no matter how big it is, it won't overflow
                       ),
                       title: new Text(StringUtils.capitalize(data[i]["name"])),
                       // subtitle: Text(data[i]["url"]),
@@ -106,9 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class SecondPage extends StatefulWidget {
   Map data;
-
   SecondPage(this.data);
-
   _SecondState createState() => _SecondState();
 }
 
@@ -148,6 +175,22 @@ class _SecondState extends State<SecondPage> {
       appBar: AppBar(
         title: Text(StringUtils.capitalize(widget.data['name'])),
         elevation: 0.0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.star_border),
+            onPressed: () {
+              Fluttertoast.showToast(
+                  msg: "This is Center Short Toast",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+            },
+          ),
+        ],
       ),
       body: _buildPokemon(context),
     );
@@ -160,20 +203,15 @@ class _SecondState extends State<SecondPage> {
       body: (
           Column(
               children: <Widget>[
-                Container(
-                  child: Container(
-                    height: 90.0,
-                    color: Colors.red,
-                  ),
-                ),
                 Expanded(
                     child: Container(
+                      transform: Matrix4.translationValues(0.0, 50.0, 0.0),
                       constraints: BoxConstraints.expand(),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular((30.0)),
-                            topRight: Radius.circular((30.0)),
+                            topLeft: Radius.circular((45.0)),
+                            topRight: Radius.circular((45.0)),
                           )
                       ),
                       child: new Column(
@@ -181,7 +219,7 @@ class _SecondState extends State<SecondPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            transform: Matrix4.translationValues(0.0, -75.0, 0.0),
+                            transform: Matrix4.translationValues(0.0, -70.0, 0.0),
                             margin: const EdgeInsets.all(10.0),
                             padding: EdgeInsets.all(10),
                             child: Image.asset(
@@ -192,21 +230,113 @@ class _SecondState extends State<SecondPage> {
                               height: 250,
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.all(10.0),
-                            padding: EdgeInsets.all(10),
-                            child: Text(
-                              StringUtils.capitalize(post['name']),
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35,),
-                            ),
+                          Row(
+                            children: <Widget>[
+                              new Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 15,
+                                    top: 15,
+                                    right: 7.5,
+                                    bottom: 15,
+                                  ),
+                                  child: new Container(
+                                    transform: Matrix4.translationValues(0.0, -80.0, 0.0),
+                                    child: Column(
+                                    children: <Widget>[
+                                        new Text(
+                                          '#' + (post['id']).toString() + ' - ' + StringUtils.capitalize(post['name']),
+                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ) ,
+                            ],
                           ),
-                          Text(
-                            'Height',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18,),
+                          Row(
+                            children: <Widget>[
+                              new Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 15,
+                                    top: 15,
+                                    right: 7.5,
+                                    bottom: 15,
+                                  ),
+                                  child: new Container(
+                                    transform: Matrix4.translationValues(0.0, -80.0, 0.0),
+                                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                    height: 100.0,
+                                    decoration: new BoxDecoration(
+                                      borderRadius: new BorderRadius.circular(15.0),
+                                      color: Colors.red,
+                                    ),
+                                    child: new Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        new Text(
+                                          'Height',
+                                          style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        new Text(
+                                          double.parse((post['height'] * 0.32 ).toStringAsFixed(2)).toString() + 'ft  =  ' + double.parse((post['height'] / 10).toStringAsFixed(2)).toString() + 'm',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ),
+                              new Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 7.5,
+                                      top: 15,
+                                      right: 15,
+                                      bottom: 15,
+                                    ),
+                                    child: new Container(
+                                      transform: Matrix4.translationValues(0.0, -80.0, 0.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      height: 100.0,
+                                      decoration: new BoxDecoration(
+                                        borderRadius: new BorderRadius.circular(15.0),
+                                        color: Colors.red,
+                                      ),
+                                      child: new Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          new Text(
+                                            'Weight',
+                                            style: TextStyle(
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              fontSize: 20,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          new Text(
+                                            double.parse((post['weight'] / 453.592 ).toStringAsFixed(2)).toString() + 'lbs  =  ' + double.parse((post['weight']).toStringAsFixed(2)).toString() + 'kg',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                              ),
+                            ],
                           ),
-                          Text(double.parse((post['height'] * 0.32 ).toStringAsFixed(2)).toString() + 'ft  =  ' + double.parse((post['height'] * 10).toStringAsFixed(2)).toString() + 'm'),
-                          // Text('type ' + post['types'][0]['type']['name'].toString()),
-                          // Image.network(post['sprites']['front_default'])
                         ],
                       ),
                     )
