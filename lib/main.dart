@@ -4,6 +4,7 @@ import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -256,6 +257,78 @@ class _SecondState extends State<SecondPage> {
                             ],
                           ),
                           Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      top: 0,
+                                      right: 7.5,
+                                      bottom: 5,
+                                    ),
+                                    child: new Container(
+                                      transform: Matrix4.translationValues(0.0, -80.0, 0.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                                      height: 45.0,
+                                      width: 120.0,
+                                      decoration: new BoxDecoration(
+                                        borderRadius: new BorderRadius.circular(100.0),
+                                        color: Colors.black26,
+                                      ),
+                                      child: new Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          new Text(
+                                            StringUtils.capitalize(post['types'][1]['type']['name']),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                              ),
+                              new Container(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      right: 20,
+                                      top: 0,
+                                      left: 7.5,
+                                      bottom: 5,
+                                    ),
+                                    child: new Container(
+                                      transform: Matrix4.translationValues(0.0, -80.0, 0.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                                      height: 45.0,
+                                      width: 120.0,
+                                      decoration: new BoxDecoration(
+                                        borderRadius: new BorderRadius.circular(100.0),
+                                        color: Colors.black26,
+                                      ),
+                                      child: new Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          new Text(
+                                            StringUtils.capitalize(post['types'][0]['type']['name']),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                              ),
+                            ],
+                          ),
+                          Row(
                             children: <Widget>[
                               new Expanded(
                                 child: Padding(
@@ -267,7 +340,7 @@ class _SecondState extends State<SecondPage> {
                                   ),
                                   child: new Container(
                                     transform: Matrix4.translationValues(0.0, -80.0, 0.0),
-                                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
                                     height: 100.0,
                                     decoration: new BoxDecoration(
                                       borderRadius: new BorderRadius.circular(15.0),
